@@ -277,7 +277,7 @@ function Intro({ onStart, onSkipToVsl }: { onStart: () => void; onSkipToVsl: () 
   );
 }
 
-function StepView({ step, onNext }: { step: Step; onNext: () => void }) {
+function StepView({ step, onNext, onBack }: { step: Step; onNext: () => void; onBack: () => void }) {
   return (
     <div className="flex-1 flex flex-col px-5 pt-6 pb-28 max-w-md mx-auto w-full">
       <div className="flex-1 flex flex-col animate-fade-up">
@@ -329,7 +329,7 @@ function StepView({ step, onNext }: { step: Step; onNext: () => void }) {
   );
 }
 
-function VslStep({ onNext }: { onNext: () => void }) {
+function VslStep({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
