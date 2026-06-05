@@ -144,6 +144,7 @@ function QuizPage() {
 
   const isIntro = index === 0;
   const isFinal = index === TOTAL + 1; // final offer screen
+  const isVsl = index === steps.length + 1;
   const stepIndex = index - 1; // for steps array
   const currentStepNumber = Math.min(index, TOTAL);
 
@@ -152,14 +153,20 @@ function QuizPage() {
     return Math.min(100, (currentStepNumber / TOTAL) * 100);
   }, [isIntro, currentStepNumber]);
 
-  const next = () => {
+  const navigateTo = (target: number) => {
     setLoading(true);
     setTimeout(() => {
-      setIndex((i) => i + 1);
+      setIndex(target);
       setLoading(false);
       window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-    }, 380);
+    }, 280);
   };
+
+  const next = () => navigateTo(index + 1);
+  const prev = () => navigateTo(Math.max(0, index - 1));
+  const goToVsl = () => navigateTo(steps.length + 1);
+
+  const canGoBack = !isIntro;
 
   return (
     <div className="min-h-[100dvh] bg-background text-foreground flex flex-col">
@@ -168,20 +175,43 @@ function QuizPage() {
         <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md border-b border-border">
           <div className="max-w-md mx-auto px-4 pt-3 pb-2">
             <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                {canGoBack && (
+                  <button
+                    onClick={prev}
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                    Voltar
+                  </button>
+                )}
+              </div>
               <img src={LOGO} alt="Grupo Explosivo" className="h-8 w-auto" />
-              <span className="text-xs font-semibold text-muted-foreground tabular-nums">
-                Etapa {currentStepNumber} de {TOTAL}
-              </span>
+              {!isVsl && !isFinal && (
+                <button
+                  onClick={goToVsl}
+                  className="text-[11px] font-bold text-primary-dark hover:text-primary underline underline-offset-2 transition-colors"
+                >
+                  Ver oferta
+                </button>
+              )}
+              {(isVsl || isFinal) && (
+                <span className="text-xs font-semibold text-muted-foreground tabular-nums">
+                  {isFinal ? "Oferta" : "VSL"}
+                </span>
+              )}
             </div>
-            <div className="h-2 w-full rounded-full bg-secondary overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-500 ease-out"
-                style={{
-                  width: `${progress}%`,
-                  background: "linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)",
-                }}
-              />
-            </div>
+            {!isVsl && !isFinal && (
+              <div className="h-2 w-full rounded-full bg-secondary overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all duration-500 ease-out"
+                  style={{
+                    width: `${progress}%`,
+                    background: "linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)",
+                  }}
+                />
+              </div>
+            )}
           </div>
         </header>
       )}
@@ -191,13 +221,13 @@ function QuizPage() {
         {loading ? (
           <Loader />
         ) : isIntro ? (
-          <Intro onStart={next} />
+          <Intro onStart={next} onSkipToVsl={goToVsl} />
         ) : index <= steps.length ? (
-          <StepView key={index} step={steps[stepIndex]} onNext={next} />
+          <StepView key={index} step={steps[stepIndex]} onNext={next} onBack={prev} />
         ) : index === steps.length + 1 ? (
-          <VslStep onNext={next} />
+          <VslStep onNext={next} onBack={prev} />
         ) : (
-          <FinalOffer />
+          <FinalOffer onBack={prev} />
         )}
       </main>
     </div>
