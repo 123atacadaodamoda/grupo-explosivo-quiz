@@ -248,7 +248,7 @@ function Loader() {
   );
 }
 
-function Intro({ onStart }: { onStart: () => void }) {
+function Intro({ onStart, onSkipToVsl }: { onStart: () => void; onSkipToVsl: () => void }) {
   return (
     <div className="flex-1 flex flex-col px-6 pt-10 pb-28 max-w-md mx-auto w-full">
       <div className="flex-1 flex flex-col items-center justify-center text-center animate-fade-up">
@@ -264,7 +264,15 @@ function Intro({ onStart }: { onStart: () => void }) {
           Responda rapidamente e descubra como a <strong className="text-foreground">API Oficial</strong> está mudando o jogo.
         </p>
       </div>
-      <FixedCta label="Começar Agora →" onClick={onStart} />
+      <div className="flex flex-col gap-3">
+        <FixedCta label="Começar Agora →" onClick={onStart} />
+        <button
+          onClick={onSkipToVsl}
+          className="text-xs font-bold text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors pb-2"
+        >
+          Já conheço — ir direto para a oferta
+        </button>
+      </div>
     </div>
   );
 }
