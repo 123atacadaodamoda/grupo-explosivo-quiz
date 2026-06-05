@@ -286,7 +286,7 @@ function VslStep({ onNext }: { onNext: () => void }) {
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState({ c: 0, d: 0 });
-  const [showCta, setShowCta] = useState(false);
+  const [showCta, setShowCta] = useState(true);
 
   useEffect(() => {
     const v = videoRef.current;
