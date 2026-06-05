@@ -61,9 +61,9 @@ const steps: Step[] = [
     solution: "Conheça processos que permitem crescimento muito mais rápido e organizado.",
   },
   {
-    title: "Dificuldade para aprovar templates?",
-    pains: ["Reprovações constantes", "Tempo perdido", "Campanhas atrasadas"],
-    solution: "Aprenda técnicas que aumentam suas chances de aprovação.",
+    title: "Dificuldade para disparar em massa?",
+    pains: ["Bloqueios constantes", "Limitação de envios", "Crescimento travado"],
+    solution: "Você vai aprender a estrutura correta para disparar até 100 mil mensagens por dia sem bloqueio.",
   },
   {
     title: "Seu custo de aquisição está alto?",
