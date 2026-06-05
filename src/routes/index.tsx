@@ -105,11 +105,6 @@ const steps: Step[] = [
     wins: ["Fluxos prontos", "Configuração rápida", "Economia de tempo"],
   },
   {
-    title: "🎁 BÔNUS #3",
-    subtitle: "Fluxos Premium",
-    note: "Receba modelos avançados que aceleram a implementação da sua estrutura.",
-  },
-  {
     title: "Imagine poder escalar sua operação para outro nível",
     pains: ["Limitação de envio", "Crescimento lento", "Dependência de métodos ultrapassados"],
     wins: [
@@ -331,7 +326,6 @@ function StepView({ step, onNext, onBack }: { step: Step; onNext: () => void; on
 
 function VslStep({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState({ c: 0, d: 0 });
   const [showCta, setShowCta] = useState(true);
@@ -358,14 +352,6 @@ function VslStep({ onNext, onBack }: { onNext: () => void; onBack: () => void })
     return `${m}:${r.toString().padStart(2, "0")}`;
   };
 
-  const unmute = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = false;
-    v.play().catch(() => {});
-    setMuted(false);
-  };
-
   return (
     <div className="flex-1 flex flex-col px-4 pt-4 pb-28 max-w-md mx-auto w-full">
       <div className="animate-fade-up">
@@ -384,18 +370,9 @@ function VslStep({ onNext, onBack }: { onNext: () => void; onBack: () => void })
             poster="https://i.postimg.cc/d17gcSTM/Gemini-Generated-Image-9jwevz9jwevz9jwe.png"
             playsInline
             autoPlay
-            muted={muted}
+            muted={false}
             preload="auto"
           />
-          {muted && (
-            <button
-              onClick={unmute}
-              className="absolute inset-0 m-auto w-32 h-32 rounded-full bg-destructive text-destructive-foreground border-4 border-destructive/40 shadow-2xl flex flex-col items-center justify-center font-extrabold text-[11px] uppercase tracking-wide animate-pulse-glow"
-            >
-              <span className="text-2xl mb-1">🔊</span>
-              CLIQUE PARA<br />ATIVAR O SOM
-            </button>
-          )}
           <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
             <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden mb-2">
               <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${progress}%` }} />
