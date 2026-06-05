@@ -425,7 +425,7 @@ function VslStep({ onNext, onBack }: { onNext: () => void; onBack: () => void })
   );
 }
 
-function FinalOffer() {
+function FinalOffer({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex-1 flex flex-col px-5 pt-6 pb-28 max-w-md mx-auto w-full">
       <div className="flex-1 flex flex-col animate-fade-up">
