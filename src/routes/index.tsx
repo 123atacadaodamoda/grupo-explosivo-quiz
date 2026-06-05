@@ -380,11 +380,13 @@ function VslStep({ onNext, onBack }: { onNext: () => void; onBack: () => void })
           <video
             ref={videoRef}
             className="w-full h-full object-cover"
-            src="https://cdn.coverr.co/videos/coverr-typing-on-a-laptop-2584/1080p.mp4"
+            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            poster="https://i.postimg.cc/d17gcSTM/Gemini-Generated-Image-9jwevz9jwevz9jwe.png"
             playsInline
             autoPlay
             muted={muted}
             preload="auto"
+            crossOrigin="anonymous"
           />
           {muted && (
             <button
