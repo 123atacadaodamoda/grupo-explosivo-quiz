@@ -110,6 +110,16 @@ const steps: Step[] = [
     note: "Receba modelos avançados que aceleram a implementação da sua estrutura.",
   },
   {
+    title: "Imagine poder escalar sua operação para outro nível",
+    pains: ["Limitação de envio", "Crescimento lento", "Dependência de métodos ultrapassados"],
+    wins: [
+      "Dentro do Grupo Explosivo você aprenderá a utilizar uma estrutura profissional baseada na API Oficial que permite operações em larga escala.",
+      "Descubra como empresas e profissionais conseguem realizar envios em grande volume todos os dias.",
+      "Aprenda estratégias para utilizar templates de utilidade com custos extremamente reduzidos.",
+      "Estruture uma operação capaz de alcançar dezenas de milhares de contatos diariamente.",
+    ],
+  },
+  {
     title: "Resumo do que você recebe",
     wins: [
       "Método Grupo Explosivo",
@@ -397,9 +407,26 @@ function FinalOffer() {
           ))}
         </ul>
 
-        <div className="p-4 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 text-center">
+        <div className="p-4 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 text-center mb-6">
           <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold mb-1">Acesso vitalício</p>
           <p className="text-sm text-muted-foreground">🛡️ Garantia incondicional de 7 dias</p>
+        </div>
+
+        <div className="p-5 rounded-2xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 to-primary/5 mb-6 animate-pulse-glow">
+          <div className="inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold mb-3">
+            🔥 DIFERENCIAL EXCLUSIVO
+          </div>
+          <p className="text-[15px] font-semibold leading-snug mb-4">
+            Além de aprender toda a estrutura da API Oficial, você descobrirá como reduzir drasticamente seus custos operacionais utilizando templates de utilidade aprovados e estratégias de escala profissional.
+          </p>
+          <ul className="space-y-2">
+            {["Alto volume de envios", "Baixo custo operacional", "Estrutura própria", "Automação completa", "Sem depender de plataformas caras de terceiros"].map((w) => (
+              <li key={w} className="flex items-center gap-2">
+                <span className="text-primary-dark text-sm font-bold">✓</span>
+                <span className="text-[15px] font-semibold">{w}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
