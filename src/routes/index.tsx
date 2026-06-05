@@ -105,11 +105,6 @@ const steps: Step[] = [
     wins: ["Fluxos prontos", "Configuração rápida", "Economia de tempo"],
   },
   {
-    title: "🎁 BÔNUS #3",
-    subtitle: "Fluxos Premium",
-    note: "Receba modelos avançados que aceleram a implementação da sua estrutura.",
-  },
-  {
     title: "Imagine poder escalar sua operação para outro nível",
     pains: ["Limitação de envio", "Crescimento lento", "Dependência de métodos ultrapassados"],
     wins: [
