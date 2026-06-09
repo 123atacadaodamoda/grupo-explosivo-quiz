@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
 });
 
 const LOGO = "https://i.postimg.cc/d17gcSTM/Gemini-Generated-Image-9jwevz9jwevz9jwe.png";
-const CHECKOUT_URL = "#checkout";
+const CHECKOUT_URL = "https://aprender.vaiaprender.com.br/c/zjzmcuo";
 
 type Step = {
   title: string;
