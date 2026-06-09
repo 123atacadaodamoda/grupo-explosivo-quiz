@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Grupo explosivo" },
+      { name: "description", content: "A premium mobile quiz app designed for high conversion, selling the \"Grupo Explosivo - API Oficial\" course." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Grupo explosivo" },
+      { property: "og:description", content: "A premium mobile quiz app designed for high conversion, selling the \"Grupo Explosivo - API Oficial\" course." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Grupo explosivo" },
+      { name: "twitter:description", content: "A premium mobile quiz app designed for high conversion, selling the \"Grupo Explosivo - API Oficial\" course." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/246c5adc-ab66-4255-b3b0-99cce73c8d1f/id-preview-2db98097--c4a6b801-67c4-4ddb-a66a-f234779e80e5.lovable.app-1780965760597.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/246c5adc-ab66-4255-b3b0-99cce73c8d1f/id-preview-2db98097--c4a6b801-67c4-4ddb-a66a-f234779e80e5.lovable.app-1780965760597.png" },
     ],
     links: [
       {
