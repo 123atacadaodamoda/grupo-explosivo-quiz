@@ -584,7 +584,7 @@ function Offer() {
                 12x R$ 29
               </span>
             </div>
-            <p className="text-sm text-muted-foreground">ou R$ 297 à vista</p>
+            <p className="text-sm text-muted-foreground">ou R$ 97 à vista</p>
           </div>
           <CTA label="QUERO GARANTIR MEU ACESSO AGORA" sub="✅ Acesso imediato após o pagamento" />
         </div>
