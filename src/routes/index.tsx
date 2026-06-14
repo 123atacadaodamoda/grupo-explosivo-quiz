@@ -1,473 +1,722 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Grupo Explosivo — API Oficial do WhatsApp" },
-      { name: "description", content: "Descubra como empresários estão lotando grupos de WhatsApp diariamente com a API Oficial." },
-      { property: "og:title", content: "Grupo Explosivo — API Oficial do WhatsApp" },
-      { property: "og:description", content: "Responda o quiz e descubra como crescer seus grupos com estrutura profissional." },
+      { title: "Grupo Explosivo — Lote Grupos de WhatsApp com a API Oficial" },
+      {
+        name: "description",
+        content:
+          "Método completo para lotar grupos de WhatsApp diariamente usando a API Oficial. Sem bloqueios, sem depender de plataformas caras, com estrutura profissional e escalável.",
+      },
+      { property: "og:title", content: "Grupo Explosivo — Lote Grupos de WhatsApp com a API Oficial" },
+      {
+        property: "og:description",
+        content:
+          "Descubra como empresários estão escalando grupos de WhatsApp com a API Oficial. Sem bloqueios, com automação e crescimento real.",
+      },
     ],
   }),
-  component: QuizPage,
+  component: SalesPage,
 });
 
 const LOGO = "https://i.postimg.cc/d17gcSTM/Gemini-Generated-Image-9jwevz9jwevz9jwe.png";
 const CHECKOUT_URL = "https://aprender.vaiaprender.com.br/c/zjzmcuo";
+const VSL_URL =
+  "https://vobmqdlofgzbxrgabbbp.supabase.co/storage/v1/object/public/videos/368658ca-473d-41ae-b6f4-bdcba2bcf0fc.mp4";
 
-type Step = {
-  title: string;
-  subtitle?: string;
-  pains?: string[];
-  wins?: string[];
-  solution?: string;
-  note?: string;
-};
-
-const steps: Step[] = [
-  {
-    title: "Você também enfrenta esses problemas?",
-    pains: [
-      "Seus grupos não crescem como deveriam?",
-      "Você depende de divulgação manual?",
-      "Seus concorrentes crescem mais rápido?",
-    ],
-    solution: "Descubra como empresários estão utilizando a API Oficial para lotar grupos diariamente.",
-  },
-  {
-    title: "Seu WhatsApp vive levando bloqueios?",
-    pains: ["Número bloqueado", "Conta banida", "Perda de todo trabalho realizado"],
-    solution: "Aprenda a utilizar uma estrutura profissional baseada na API Oficial para trabalhar com muito mais estabilidade e escala.",
-  },
-  {
-    title: "Está cansado de perder números e grupos?",
-    pains: ["Troca constante de números", "Perda de grupos construídos", "Recomeçar do zero"],
-    solution: "Conheça o método utilizado para estruturar uma operação muito mais segura e profissional.",
-  },
-  {
-    title: "Tem dificuldade para encontrar pessoas realmente interessadas?",
-    pains: ["Leads desqualificados", "Baixo engajamento", "Poucas vendas"],
-    solution: "Aprenda a encontrar pessoas muito mais propensas a entrar e participar dos seus grupos.",
-  },
-  {
-    title: "Seus convites têm baixa aceitação?",
-    pains: ["Muitas mensagens enviadas", "Poucas entradas", "Baixo crescimento"],
-    solution: "Descubra estratégias para aumentar significativamente a entrada de novos participantes.",
-  },
-  {
-    title: "Escalar seus grupos parece impossível?",
-    pains: ["Crescimento lento", "Muito trabalho manual", "Falta de automação"],
-    solution: "Conheça processos que permitem crescimento muito mais rápido e organizado.",
-  },
-  {
-    title: "Dificuldade para disparar em massa?",
-    pains: ["Bloqueios constantes", "Limitação de envios", "Crescimento travado"],
-    solution: "Você vai aprender a estrutura correta para disparar até 100 mil mensagens por dia sem bloqueio.",
-  },
-  {
-    title: "Seu custo de aquisição está alto?",
-    pains: ["Campanhas caras", "Pouco retorno", "Baixa margem"],
-    solution: "Aprenda estratégias para otimizar seus resultados.",
-  },
-  {
-    title: "Seu grupo fica parado?",
-    pains: ["Pouca interação", "Pouco movimento", "Poucas oportunidades"],
-    solution: "Aprenda como manter grupos ativos e engajados.",
-  },
-  {
-    title: "Quem pode aplicar esse método?",
-    wins: ["Shopee", "Mercado Livre", "Lojas de roupas", "Negócios locais", "Prestadores de serviços", "Afiliados", "Infoprodutores"],
-    note: "Se você precisa atrair pessoas para grupos, este método pode ajudar.",
-  },
-  {
-    title: "O que você vai aprender?",
-    wins: ["Estrutura da API Oficial", "Captação de leads", "Crescimento de grupos", "Templates", "Automações", "Escala operacional", "Organização da operação"],
-  },
-  {
-    title: "Cansado de pagar plataformas caras?",
-    pains: ["Mensalidades altas", "Limitações", "Dependência de terceiros"],
-    solution: "Aprenda a construir sua própria estrutura.",
-  },
-  {
-    title: "Tenha sua própria plataforma",
-    wins: ["Controle total", "Mais liberdade", "Estrutura própria", "Possibilidade de prestar serviços"],
-    note: "Você não ficará dependente de ferramentas alugadas.",
-  },
-  {
-    title: "🎁 BÔNUS #1",
-    subtitle: "Treinamento Completo de N8N",
-    wins: ["Instalação", "Configuração", "Automações", "Estrutura profissional"],
-  },
-  {
-    title: "🎁 BÔNUS #2",
-    subtitle: "Templates Prontos do N8N",
-    wins: ["Fluxos prontos", "Configuração rápida", "Economia de tempo"],
-  },
-  {
-    title: "Imagine poder escalar sua operação para outro nível",
-    pains: ["Limitação de envio", "Crescimento lento", "Dependência de métodos ultrapassados"],
-    wins: [
-      "Dentro do Grupo Explosivo você aprenderá a utilizar uma estrutura profissional baseada na API Oficial que permite operações em larga escala.",
-      "Descubra como empresas e profissionais conseguem realizar envios em grande volume todos os dias.",
-      "Aprenda estratégias para utilizar templates de utilidade com custos extremamente reduzidos.",
-      "Estruture uma operação capaz de alcançar dezenas de milhares de contatos diariamente.",
-    ],
-  },
-  {
-    title: "Resumo do que você recebe",
-    wins: [
-      "Método Grupo Explosivo",
-      "API Oficial",
-      "Captação de Leads",
-      "Crescimento de Grupos",
-      "Instalação da Plataforma",
-      "N8N",
-      "Templates",
-      "Fluxos Premium",
-      "Atualizações futuras",
-    ],
-  },
-];
-
-const TOTAL = steps.length + 1; // +1 for VSL/final
-
-function QuizPage() {
-  // index 0 = intro, 1..18 = steps (17 quiz + 1 final VSL)
-  const [index, setIndex] = useState(0);
-  const [loading, setLoading] = useState(false);
-
-  const isIntro = index === 0;
-  const isFinal = index === TOTAL + 1; // final offer screen
-  const isVsl = index === steps.length + 1;
-  const stepIndex = index - 1; // for steps array
-  const currentStepNumber = Math.min(index, TOTAL);
-
-  const progress = useMemo(() => {
-    if (isIntro) return 0;
-    return Math.min(100, (currentStepNumber / TOTAL) * 100);
-  }, [isIntro, currentStepNumber]);
-
-  const navigateTo = (target: number) => {
-    setLoading(true);
-    setTimeout(() => {
-      setIndex(target);
-      setLoading(false);
-      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-    }, 280);
-  };
-
-  const next = () => navigateTo(index + 1);
-  const prev = () => navigateTo(Math.max(0, index - 1));
-  const goToVsl = () => navigateTo(steps.length + 1);
-
-  const canGoBack = !isIntro;
-
+function CTA({ label = "QUERO GARANTIR MEU ACESSO", sub }: { label?: string; sub?: string }) {
   return (
-    <div className="min-h-[100dvh] bg-background text-foreground flex flex-col">
-      {/* Top bar */}
-      {!isIntro && (
-        <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md border-b border-border">
-          <div className="max-w-md mx-auto px-4 pt-3 pb-2">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                {canGoBack && (
-                  <button
-                    onClick={prev}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-                    Voltar
-                  </button>
-                )}
-              </div>
-              <img src={LOGO} alt="Grupo Explosivo" className="h-8 w-auto" />
-              {!isVsl && !isFinal && (
-                <button
-                  onClick={goToVsl}
-                  className="text-[11px] font-bold text-primary-dark hover:text-primary underline underline-offset-2 transition-colors"
-                >
-                  Ver oferta
-                </button>
-              )}
-              {(isVsl || isFinal) && (
-                <span className="text-xs font-semibold text-muted-foreground tabular-nums">
-                  {isFinal ? "Oferta" : "VSL"}
-                </span>
-              )}
-            </div>
-            {!isVsl && !isFinal && (
-              <div className="h-2 w-full rounded-full bg-secondary overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all duration-500 ease-out"
-                  style={{
-                    width: `${progress}%`,
-                    background: "linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)",
-                  }}
-                />
-              </div>
-            )}
-          </div>
-        </header>
-      )}
-
-      {/* Body */}
-      <main className="flex-1 flex flex-col">
-        {loading ? (
-          <Loader />
-        ) : isIntro ? (
-          <Intro onStart={next} onSkipToVsl={goToVsl} />
-        ) : index <= steps.length ? (
-          <StepView key={index} step={steps[stepIndex]} onNext={next} onBack={prev} />
-        ) : index === steps.length + 1 ? (
-          <VslStep onNext={next} onBack={prev} />
-        ) : (
-          <FinalOffer onBack={prev} />
-        )}
-      </main>
+    <div className="w-full flex flex-col items-center gap-2 my-2">
+      <a
+        href={CHECKOUT_URL}
+        className="btn-primary btn-primary-hover animate-pulse-glow text-base sm:text-lg max-w-md text-center"
+      >
+        {label} →
+      </a>
+      {sub && <p className="text-xs text-muted-foreground text-center">{sub}</p>}
     </div>
   );
 }
 
-function Loader() {
+function Section({
+  id,
+  eyebrow,
+  title,
+  subtitle,
+  children,
+  tint = "default",
+}: {
+  id?: string;
+  eyebrow?: string;
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  children: React.ReactNode;
+  tint?: "default" | "muted" | "dark" | "primary";
+}) {
+  const bg =
+    tint === "muted"
+      ? "bg-secondary/40"
+      : tint === "dark"
+      ? "bg-[oklch(0.18_0.02_160)] text-white"
+      : tint === "primary"
+      ? "bg-gradient-to-br from-primary/10 via-background to-primary/5"
+      : "bg-background";
   return (
-    <div className="flex-1 flex items-center justify-center px-6">
-      <div className="flex flex-col items-center gap-4 animate-fade-up">
-        <div className="relative h-14 w-14">
-          <div className="absolute inset-0 rounded-full border-4 border-secondary" />
-          <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin" />
-        </div>
-        <p className="text-sm text-muted-foreground font-medium">Carregando...</p>
-      </div>
-    </div>
-  );
-}
-
-function Intro({ onStart, onSkipToVsl }: { onStart: () => void; onSkipToVsl: () => void }) {
-  return (
-    <div className="flex-1 flex flex-col px-6 pt-10 pb-28 max-w-md mx-auto w-full">
-      <div className="flex-1 flex flex-col items-center justify-center text-center animate-fade-up">
-        <img src={LOGO} alt="Grupo Explosivo" className="h-28 w-auto mb-8 drop-shadow-xl" />
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold mb-5">
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          QUIZ EXCLUSIVO
-        </div>
-        <h1 className="text-[26px] leading-[1.15] font-extrabold tracking-tight mb-4 text-balance">
-          Descubra por que milhares de pessoas <span className="text-primary-dark">não conseguem crescer</span> seus grupos de WhatsApp
-        </h1>
-        <p className="text-base text-muted-foreground leading-relaxed">
-          Responda rapidamente e descubra como a <strong className="text-foreground">API Oficial</strong> está mudando o jogo.
-        </p>
-      </div>
-      <div className="flex flex-col gap-3">
-        <FixedCta label="Começar Agora →" onClick={onStart} />
-        <button
-          onClick={onSkipToVsl}
-          className="text-xs font-bold text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors pb-2"
-        >
-          Já conheço — ir direto para a oferta
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function StepView({ step, onNext, onBack }: { step: Step; onNext: () => void; onBack: () => void }) {
-  return (
-    <div className="flex-1 flex flex-col px-5 pt-6 pb-28 max-w-md mx-auto w-full">
-      <div className="flex-1 flex flex-col animate-fade-up">
-        <h2 className="text-[22px] leading-tight font-extrabold tracking-tight text-balance mb-2">
-          {step.title}
-        </h2>
-        {step.subtitle && (
-          <p className="text-lg font-semibold text-primary-dark mb-4">{step.subtitle}</p>
-        )}
-
-        {step.pains && (
-          <ul className="space-y-3 mt-4">
-            {step.pains.map((p) => (
-              <li key={p} className="flex items-start gap-3 p-3.5 rounded-xl bg-destructive/5 border border-destructive/15">
-                <span className="text-lg leading-none mt-0.5">❌</span>
-                <span className="text-[15px] font-medium leading-snug">{p}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {step.wins && (
-          <ul className="space-y-2.5 mt-4">
-            {step.wins.map((w) => (
-              <li key={w} className="flex items-center gap-3 p-3.5 rounded-xl bg-accent border border-primary/15">
-                <span className="flex-shrink-0 h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">✓</span>
-                <span className="text-[15px] font-semibold leading-snug">{w}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {step.solution && (
-          <div className="mt-5 p-4 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10">
-            <p className="text-[15px] font-semibold leading-snug">
-              <span className="text-primary-dark">✅</span> {step.solution}
-            </p>
+    <section id={id} className={`${bg} py-16 sm:py-24 px-5`}>
+      <div className="max-w-6xl mx-auto">
+        {eyebrow && (
+          <div className="flex justify-center mb-4">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary-dark text-[11px] font-bold uppercase tracking-wider">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+              {eyebrow}
+            </span>
           </div>
         )}
-
-        {step.note && !step.solution && (
-          <p className="mt-5 text-[15px] text-muted-foreground italic leading-snug">
-            "{step.note}"
+        {title && (
+          <h2 className="text-center text-3xl sm:text-5xl font-extrabold tracking-tight text-balance leading-[1.1] mb-4">
+            {title}
+          </h2>
+        )}
+        {subtitle && (
+          <p className="text-center text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+            {subtitle}
           </p>
         )}
+        {children}
       </div>
-      <FixedCta label="Continuar →" onClick={onNext} />
+    </section>
+  );
+}
+
+function SalesPage() {
+  return (
+    <div className="min-h-[100dvh] bg-background text-foreground">
+      <TopBar />
+      <Hero />
+      <SocialProofStrip />
+      <Pains />
+      <Solution />
+      <Vsl />
+      <Benefits />
+      <HowItWorks />
+      <ForWhom />
+      <DifferentSection />
+      <WhatsIncluded />
+      <Bonuses />
+      <Testimonials />
+      <Offer />
+      <Guarantee />
+      <Objections />
+      <Faq />
+      <FinalCta />
+      <Footer />
     </div>
   );
 }
 
-function VslStep({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [progress, setProgress] = useState(0);
-  const [time, setTime] = useState({ c: 0, d: 0 });
-  const [showCta, setShowCta] = useState(true);
+function TopBar() {
+  return (
+    <header className="sticky top-0 z-40 backdrop-blur-md bg-background/85 border-b border-border">
+      <div className="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <img src={LOGO} alt="Grupo Explosivo" className="h-8 w-auto" />
+          <span className="font-extrabold tracking-tight text-sm sm:text-base">Grupo Explosivo</span>
+        </div>
+        <a
+          href={CHECKOUT_URL}
+          className="hidden sm:inline-flex items-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-xs font-bold hover:opacity-90 transition"
+        >
+          QUERO ACESSO →
+        </a>
+      </div>
+    </header>
+  );
+}
 
+function Hero() {
+  return (
+    <section className="relative overflow-hidden px-5 pt-12 pb-20 sm:pt-20 sm:pb-28">
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 opacity-60"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 50% at 50% 0%, color-mix(in oklab, var(--primary) 25%, transparent), transparent 60%)",
+        }}
+      />
+      <div className="max-w-4xl mx-auto text-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/15 text-primary-dark text-[11px] font-bold uppercase tracking-wider mb-6">
+          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+          Método Oficial • API do WhatsApp
+        </div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-balance leading-[1.05] mb-6">
+          Lote grupos de WhatsApp <span className="text-primary-dark">todos os dias</span> usando a{" "}
+          <span className="bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
+            API Oficial
+          </span>
+        </h1>
+        <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
+          Pare de perder números, evite bloqueios e construa uma operação profissional capaz de
+          disparar <strong className="text-foreground">até 100 mil mensagens por dia</strong> — sem
+          depender de plataformas caras.
+        </p>
+        <CTA label="QUERO COMEÇAR AGORA" sub="Acesso imediato • Atualizações incluídas" />
+        <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs sm:text-sm text-muted-foreground">
+          {[
+            "✅ Sem bloqueios",
+            "✅ Estrutura própria",
+            "✅ Escala real",
+            "✅ Bônus incluídos",
+          ].map((i) => (
+            <span key={i} className="font-semibold">{i}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SocialProofStrip() {
+  const items = [
+    "Shopee", "Mercado Livre", "Lojas de Roupa", "Negócios Locais",
+    "Afiliados", "Infoprodutores", "Prestadores de Serviço",
+  ];
+  return (
+    <div className="border-y border-border bg-secondary/30 py-6 overflow-hidden">
+      <p className="text-center text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+        Usado por quem precisa de leads no WhatsApp
+      </p>
+      <div className="flex flex-wrap justify-center gap-3 px-5">
+        {items.map((i) => (
+          <span
+            key={i}
+            className="px-3 py-1.5 rounded-full bg-background border border-border text-xs font-semibold"
+          >
+            {i}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Pains() {
+  const pains = [
+    { t: "Seus grupos não crescem", d: "Você divulga, divulga e o crescimento continua travado." },
+    { t: "WhatsApp vive bloqueando", d: "Número banido, conta caída e todo o trabalho perdido." },
+    { t: "Perde grupos do nada", d: "Troca constante de números e precisa recomeçar do zero." },
+    { t: "Leads desqualificados", d: "Pessoas entram, não interagem e nunca compram." },
+    { t: "Convites com baixa aceitação", d: "Manda muito, entra pouco — e o esforço não compensa." },
+    { t: "Dependência de plataformas caras", d: "Mensalidades altas, limitações e nenhum controle." },
+  ];
+  return (
+    <Section
+      eyebrow="Você se identifica?"
+      title={<>Se você vende, atende ou capta clientes no WhatsApp, <span className="text-primary-dark">um desses problemas é seu</span></>}
+      subtitle="A maioria dos empresários ainda usa métodos manuais e bloqueáveis. Resultado: muito trabalho, pouco retorno e zero previsibilidade."
+      tint="muted"
+    >
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {pains.map((p) => (
+          <div
+            key={p.t}
+            className="p-5 rounded-2xl bg-background border border-destructive/20 shadow-sm hover:shadow-md transition"
+          >
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 h-9 w-9 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center text-lg">
+                ✕
+              </span>
+              <div>
+                <h3 className="font-bold text-[15px] mb-1">{p.t}</h3>
+                <p className="text-sm text-muted-foreground leading-snug">{p.d}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Solution() {
+  return (
+    <Section
+      eyebrow="A solução"
+      title={<>Conheça o <span className="text-primary-dark">Grupo Explosivo</span></>}
+      subtitle="O método completo para construir uma operação profissional de captação e crescimento de grupos no WhatsApp usando a API Oficial — a mesma estrutura usada por grandes empresas."
+      tint="primary"
+    >
+      <div className="max-w-3xl mx-auto bg-background rounded-3xl border border-primary/20 p-6 sm:p-10 shadow-xl">
+        <div className="grid sm:grid-cols-3 gap-6 text-center">
+          {[
+            { n: "100k", t: "Mensagens por dia sem bloqueio" },
+            { n: "100%", t: "Estrutura oficial e segura" },
+            { n: "∞", t: "Escala sem depender de terceiros" },
+          ].map((s) => (
+            <div key={s.t}>
+              <div className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-br from-primary to-primary-dark bg-clip-text text-transparent">
+                {s.n}
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">{s.t}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 pt-8 border-t border-border text-center">
+          <p className="text-base sm:text-lg leading-relaxed">
+            Você vai aprender, do zero, a montar sua <strong>própria plataforma</strong> baseada na
+            <strong> API Oficial do WhatsApp</strong>, atrair leads qualificados, encher grupos
+            diariamente e <strong>escalar com segurança</strong>.
+          </p>
+          <div className="mt-6"><CTA /></div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function Vsl() {
+  const ref = useRef<HTMLVideoElement | null>(null);
+  const [progress, setProgress] = useState(0);
   useEffect(() => {
-    const v = videoRef.current;
+    const v = ref.current;
     if (!v) return;
     const onTime = () => {
-      setTime({ c: v.currentTime, d: v.duration || 0 });
       if (v.duration) setProgress((v.currentTime / v.duration) * 100);
-      // reveal CTA at 50% of video (or after 2 min)
-      if (v.duration && v.currentTime / v.duration > 0.5) setShowCta(true);
-      else if (v.currentTime > 120) setShowCta(true);
     };
     v.addEventListener("timeupdate", onTime);
-    v.play().catch(() => {});
     return () => v.removeEventListener("timeupdate", onTime);
   }, []);
-
-  const fmt = (s: number) => {
-    if (!s || !isFinite(s)) return "0:00";
-    const m = Math.floor(s / 60);
-    const r = Math.floor(s % 60);
-    return `${m}:${r.toString().padStart(2, "0")}`;
-  };
-
   return (
-    <div className="flex-1 flex flex-col px-4 pt-4 pb-28 max-w-md mx-auto w-full">
-      <div className="animate-fade-up">
-        <h2 className="text-[22px] leading-tight font-extrabold tracking-tight text-center mb-2">
-          Veja como o método funciona na prática
-        </h2>
-        <p className="text-sm text-muted-foreground text-center mb-4">
-          Assista o vídeo até o final para liberar sua oferta exclusiva
-        </p>
-
-        <div className="relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl aspect-[9/16]">
+    <Section
+      id="vsl"
+      eyebrow="Assista agora"
+      title={<>Veja o método funcionando <span className="text-primary-dark">na prática</span></>}
+      subtitle="Em poucos minutos você entende exatamente como tudo funciona — e por que isso é diferente de qualquer coisa que já viu."
+    >
+      <div className="max-w-md mx-auto">
+        <div className="relative w-full rounded-3xl overflow-hidden bg-black shadow-2xl aspect-[9/16] ring-1 ring-primary/20">
           <video
-            ref={videoRef}
+            ref={ref}
             className="w-full h-full object-cover"
-            src="https://vobmqdlofgzbxrgabbbp.supabase.co/storage/v1/object/public/videos/368658ca-473d-41ae-b6f4-bdcba2bcf0fc.mp4"
-            poster="https://i.postimg.cc/d17gcSTM/Gemini-Generated-Image-9jwevz9jwevz9jwe.png"
+            src={VSL_URL}
+            poster={LOGO}
             playsInline
-            autoPlay
-            muted={false}
-            preload="auto"
+            controls
+            preload="metadata"
           />
-          <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-            <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden mb-2">
-              <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${progress}%` }} />
-            </div>
-            <div className="flex items-center justify-between text-white text-[11px] tabular-nums">
-              <span>{fmt(time.c)} / {fmt(time.d)}</span>
-              <span className="opacity-70">Reprodução protegida</span>
+          <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+            <div className="h-1 w-full bg-white/20 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary rounded-full transition-all"
+                style={{ width: `${progress}%` }}
+              />
             </div>
           </div>
         </div>
-
-        <div className="mt-5 min-h-[64px]">
-          {showCta ? (
-            <button
-              onClick={onNext}
-              className="btn-primary btn-primary-hover animate-pulse-glow text-base"
-            >
-              QUERO GARANTIR AGORA →
-            </button>
-          ) : (
-            <p className="text-center text-xs text-muted-foreground">
-              ⏳ Aguarde — botão liberado durante o vídeo
-            </p>
-          )}
-        </div>
+        <div className="mt-6"><CTA label="QUERO GARANTIR AGORA" /></div>
       </div>
-    </div>
+    </Section>
   );
 }
 
-function FinalOffer({ onBack }: { onBack: () => void }) {
+function Benefits() {
+  const benefits = [
+    { i: "🚀", t: "Crescimento real e diário", d: "Grupos lotados todos os dias com pessoas interessadas de verdade." },
+    { i: "🛡️", t: "Adeus bloqueios", d: "Estrutura baseada na API Oficial — segurança e estabilidade total." },
+    { i: "⚙️", t: "Operação automatizada", d: "Fluxos prontos no N8N para você economizar tempo e escalar." },
+    { i: "💰", t: "Custo muito menor", d: "Templates de utilidade extremamente baratos — corte gastos com plataformas." },
+    { i: "📈", t: "Até 100k envios/dia", d: "Estrutura capaz de alcançar dezenas de milhares de contatos por dia." },
+    { i: "👑", t: "Independência total", d: "Sua própria plataforma. Sem ficar refém de ferramentas alugadas." },
+  ];
   return (
-    <div className="flex-1 flex flex-col px-5 pt-6 pb-28 max-w-md mx-auto w-full">
-      <div className="flex-1 flex flex-col animate-fade-up">
-        <div className="inline-flex self-center items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold mb-4">
-          🔥 OFERTA EXCLUSIVA LIBERADA
-        </div>
-        <h2 className="text-[26px] leading-[1.15] font-extrabold tracking-tight text-balance text-center mb-5">
-          Você está pronto para transformar seus grupos em uma <span className="text-primary-dark">máquina de crescimento?</span>
-        </h2>
-
-        <ul className="space-y-2.5 mb-6">
-          {["Estrutura profissional", "Automação", "Crescimento acelerado", "Menos dependência de terceiros"].map((w) => (
-            <li key={w} className="flex items-center gap-3 p-3.5 rounded-xl bg-accent border border-primary/15">
-              <span className="flex-shrink-0 h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">✓</span>
-              <span className="text-[15px] font-semibold">{w}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="p-4 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 text-center mb-6">
-          <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold mb-1">Acesso vitalício</p>
-          <p className="text-sm text-muted-foreground">🛡️ Garantia incondicional de 7 dias</p>
-        </div>
-
-        <div className="p-5 rounded-2xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 to-primary/5 mb-6 animate-pulse-glow">
-          <div className="inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold mb-3">
-            🔥 DIFERENCIAL EXCLUSIVO
+    <Section
+      eyebrow="Benefícios"
+      title={<>O que muda quando você aplica o método</>}
+      subtitle="Mais leads qualificados, mais grupos cheios, menos dor de cabeça e uma operação que cresce com você."
+    >
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {benefits.map((b) => (
+          <div
+            key={b.t}
+            className="group p-6 rounded-2xl bg-background border border-border hover:border-primary/40 hover:shadow-glow transition-all"
+          >
+            <div className="text-3xl mb-3">{b.i}</div>
+            <h3 className="font-bold text-lg mb-1.5">{b.t}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{b.d}</p>
           </div>
-          <p className="text-[15px] font-semibold leading-snug mb-4">
-            Além de aprender toda a estrutura da API Oficial, você descobrirá como reduzir drasticamente seus custos operacionais utilizando templates de utilidade aprovados e estratégias de escala profissional.
-          </p>
-          <ul className="space-y-2">
-            {["Alto volume de envios", "Baixo custo operacional", "Estrutura própria", "Automação completa", "Sem depender de plataformas caras de terceiros"].map((w) => (
-              <li key={w} className="flex items-center gap-2">
-                <span className="text-primary-dark text-sm font-bold">✓</span>
-                <span className="text-[15px] font-semibold">{w}</span>
+        ))}
+      </div>
+      <div className="mt-12"><CTA /></div>
+    </Section>
+  );
+}
+
+function HowItWorks() {
+  const steps = [
+    { n: "01", t: "Você acessa o método", d: "Login imediato após a compra. Aulas diretas, sem enrolação." },
+    { n: "02", t: "Monta sua estrutura", d: "Instala a plataforma própria e configura a API Oficial passo a passo." },
+    { n: "03", t: "Captura leads qualificados", d: "Aplica as estratégias de captação que enchem grupos com gente que quer comprar." },
+    { n: "04", t: "Automatiza com N8N", d: "Usa os templates prontos para automatizar envios, entradas e respostas." },
+    { n: "05", t: "Escala todos os dias", d: "Sua operação cresce de forma previsível, segura e sem bloqueio." },
+  ];
+  return (
+    <Section
+      eyebrow="Como funciona"
+      title={<>5 passos para sua <span className="text-primary-dark">máquina de grupos</span></>}
+      tint="muted"
+    >
+      <div className="max-w-3xl mx-auto space-y-4">
+        {steps.map((s) => (
+          <div
+            key={s.n}
+            className="flex gap-5 p-5 rounded-2xl bg-background border border-border"
+          >
+            <div className="flex-shrink-0 h-14 w-14 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-primary-foreground flex items-center justify-center font-extrabold text-xl">
+              {s.n}
+            </div>
+            <div>
+              <h3 className="font-bold text-lg mb-1">{s.t}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function ForWhom() {
+  const items = [
+    { i: "🛍️", t: "Shopee & Mercado Livre", d: "Direcione tráfego e venda mais com grupos ativos." },
+    { i: "👕", t: "Lojas de roupas", d: "Lance coleções e promoções para uma audiência fiel." },
+    { i: "📍", t: "Negócios locais", d: "Encha agenda, gere recompra e crie comunidade." },
+    { i: "🔧", t: "Prestadores de serviço", d: "Capte clientes recorrentes com previsibilidade." },
+    { i: "💼", t: "Afiliados", d: "Distribua links em escala com público qualificado." },
+    { i: "🎓", t: "Infoprodutores", d: "Construa listas e aqueça leads para lançamentos." },
+  ];
+  return (
+    <Section
+      eyebrow="Para quem é"
+      title={<>Se você precisa atrair pessoas para grupos, <span className="text-primary-dark">é para você</span></>}
+    >
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {items.map((x) => (
+          <div key={x.t} className="p-5 rounded-2xl bg-secondary/40 border border-border">
+            <div className="text-2xl mb-2">{x.i}</div>
+            <h3 className="font-bold mb-1">{x.t}</h3>
+            <p className="text-sm text-muted-foreground">{x.d}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function DifferentSection() {
+  const rows = [
+    ["Estabilidade", "Bloqueios constantes", "API Oficial — operação estável"],
+    ["Volume diário", "Centenas de envios", "Até 100 mil envios por dia"],
+    ["Custo", "Mensalidades caras", "Templates de utilidade baratíssimos"],
+    ["Controle", "Refém de plataformas", "Sua própria plataforma"],
+    ["Crescimento", "Manual e lento", "Automatizado e escalável"],
+    ["Risco", "Perde número e grupo", "Estrutura segura e profissional"],
+  ];
+  return (
+    <Section
+      eyebrow="Por que é diferente"
+      title={<>Métodos comuns x <span className="text-primary-dark">Grupo Explosivo</span></>}
+      tint="dark"
+    >
+      <div className="max-w-4xl mx-auto rounded-3xl overflow-hidden border border-white/10">
+        <div className="grid grid-cols-3 bg-white/5 text-xs sm:text-sm font-bold uppercase tracking-wider">
+          <div className="p-4">Critério</div>
+          <div className="p-4 text-white/60">Métodos comuns</div>
+          <div className="p-4 text-primary">Grupo Explosivo</div>
+        </div>
+        {rows.map(([a, b, c], i) => (
+          <div
+            key={a}
+            className={`grid grid-cols-3 text-sm ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
+          >
+            <div className="p-4 font-semibold">{a}</div>
+            <div className="p-4 text-white/60">✕ {b}</div>
+            <div className="p-4 text-primary font-semibold">✓ {c}</div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function WhatsIncluded() {
+  const modules = [
+    "Método Grupo Explosivo (do zero ao avançado)",
+    "Estrutura completa da API Oficial",
+    "Captação de leads qualificados",
+    "Estratégias de crescimento de grupos",
+    "Instalação da sua própria plataforma",
+    "Treinamento prático de N8N",
+    "Templates prontos para automação",
+    "Fluxos premium para escala",
+    "Organização e gestão da operação",
+    "Atualizações futuras incluídas",
+  ];
+  return (
+    <Section
+      eyebrow="O que você recebe"
+      title={<>Tudo o que está incluído no <span className="text-primary-dark">Grupo Explosivo</span></>}
+    >
+      <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-3">
+        {modules.map((m) => (
+          <div
+            key={m}
+            className="flex items-center gap-3 p-4 rounded-xl bg-background border border-primary/15"
+          >
+            <span className="flex-shrink-0 h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
+              ✓
+            </span>
+            <span className="text-[15px] font-semibold">{m}</span>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Bonuses() {
+  return (
+    <Section eyebrow="Bônus exclusivos" title="Você ainda leva 2 bônus poderosos" tint="primary">
+      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {[
+          {
+            tag: "BÔNUS #1",
+            t: "Treinamento Completo de N8N",
+            d: "Instalação, configuração e estrutura profissional para automatizar tudo na sua operação.",
+            v: "R$ 497",
+          },
+          {
+            tag: "BÔNUS #2",
+            t: "Templates Prontos do N8N",
+            d: "Fluxos prontos para usar — configuração rápida e economia gigante de tempo.",
+            v: "R$ 397",
+          },
+        ].map((b) => (
+          <div
+            key={b.tag}
+            className="relative p-6 sm:p-8 rounded-3xl bg-background border-2 border-primary/30 shadow-xl"
+          >
+            <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[11px] font-bold">
+              🎁 {b.tag}
+            </div>
+            <h3 className="text-xl font-extrabold mt-2 mb-2">{b.t}</h3>
+            <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{b.d}</p>
+            <p className="text-xs">
+              Valor: <span className="line-through text-muted-foreground">{b.v}</span>{" "}
+              <span className="font-bold text-primary-dark">GRÁTIS hoje</span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Testimonials() {
+  const t = [
+    { n: "Lucas M.", r: "Afiliado", d: "Em duas semanas já estava com grupos lotando todos os dias. Mudou meu jogo." },
+    { n: "Carla S.", r: "Loja de roupas", d: "Parei de perder número. Hoje minha operação roda sozinha e só foco em vender." },
+    { n: "Rafael T.", r: "Infoprodutor", d: "A parte de N8N sozinha já vale o investimento. Automatizei tudo." },
+    { n: "Patrícia A.", r: "Negócio local", d: "Nunca tive tantos clientes vindo do WhatsApp. Recomendo demais." },
+  ];
+  return (
+    <Section eyebrow="Resultados" title="Quem já aplica está colhendo" tint="muted">
+      <div className="grid sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
+        {t.map((x) => (
+          <div key={x.n} className="p-6 rounded-2xl bg-background border border-border">
+            <div className="flex gap-1 mb-3 text-primary">{"★★★★★"}</div>
+            <p className="text-[15px] leading-relaxed mb-4">"{x.d}"</p>
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-primary-foreground font-bold">
+                {x.n[0]}
+              </div>
+              <div>
+                <p className="font-bold text-sm">{x.n}</p>
+                <p className="text-xs text-muted-foreground">{x.r}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Offer() {
+  return (
+    <Section id="oferta" eyebrow="Oferta exclusiva" title={<>Acesso completo ao <span className="text-primary-dark">Grupo Explosivo</span></>} tint="primary">
+      <div className="max-w-2xl mx-auto bg-background rounded-3xl border-2 border-primary shadow-2xl overflow-hidden">
+        <div className="bg-gradient-to-r from-primary to-primary-dark text-primary-foreground text-center py-3 px-5 text-xs sm:text-sm font-bold uppercase tracking-wider">
+          🔥 Oferta por tempo limitado
+        </div>
+        <div className="p-6 sm:p-10">
+          <ul className="space-y-2.5 mb-8">
+            {[
+              "Método Grupo Explosivo completo",
+              "API Oficial do WhatsApp do zero",
+              "Sua própria plataforma instalada",
+              "Treinamento de N8N + Templates prontos",
+              "Estratégias de captação e crescimento",
+              "Atualizações futuras incluídas",
+              "Suporte e comunidade",
+            ].map((i) => (
+              <li key={i} className="flex items-center gap-3">
+                <span className="h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">✓</span>
+                <span className="font-semibold text-[15px]">{i}</span>
               </li>
             ))}
           </ul>
+          <div className="text-center mb-6">
+            <p className="text-sm text-muted-foreground">De <span className="line-through">R$ 1.997</span> por apenas</p>
+            <div className="my-2">
+              <span className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-br from-primary to-primary-dark bg-clip-text text-transparent">
+                12x R$ 29
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground">ou R$ 297 à vista</p>
+          </div>
+          <CTA label="QUERO GARANTIR MEU ACESSO AGORA" sub="✅ Acesso imediato após o pagamento" />
         </div>
       </div>
-
-      <div className="fixed bottom-0 inset-x-0 z-40 bg-background/95 backdrop-blur-md border-t border-border">
-        <div className="max-w-md mx-auto px-4 py-3" style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}>
-          <a
-            href={CHECKOUT_URL}
-            className="btn-primary btn-primary-hover animate-pulse-glow block text-center text-[15px] leading-tight"
-          >
-            QUERO ENTRAR PARA O<br />GRUPO EXPLOSIVO →
-          </a>
-        </div>
-      </div>
-    </div>
+    </Section>
   );
 }
 
-function FixedCta({ label, onClick }: { label: string; onClick: () => void }) {
+function Guarantee() {
   return (
-    <div className="fixed bottom-0 inset-x-0 z-40 bg-background/95 backdrop-blur-md border-t border-border">
-      <div className="max-w-md mx-auto px-4 py-3" style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}>
-        <button onClick={onClick} className="btn-primary btn-primary-hover">
-          {label}
-        </button>
+    <Section>
+      <div className="max-w-3xl mx-auto rounded-3xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-background p-8 sm:p-12 flex flex-col sm:flex-row items-center gap-8 text-center sm:text-left">
+        <div className="flex-shrink-0 h-28 w-28 rounded-full bg-gradient-to-br from-primary to-primary-dark text-primary-foreground flex flex-col items-center justify-center shadow-xl">
+          <span className="text-3xl font-extrabold leading-none">7</span>
+          <span className="text-[10px] font-bold uppercase">dias</span>
+        </div>
+        <div>
+          <h3 className="text-2xl font-extrabold mb-2">Garantia incondicional de 7 dias</h3>
+          <p className="text-muted-foreground leading-relaxed">
+            Teste o método sem risco. Se em até 7 dias você achar que não é para você, basta enviar
+            um e-mail e <strong className="text-foreground">devolvemos 100% do seu investimento</strong>.
+            O risco é todo nosso.
+          </p>
+        </div>
       </div>
-    </div>
+    </Section>
+  );
+}
+
+function Objections() {
+  const items = [
+    {
+      q: "Funciona para o meu nicho?",
+      a: "Sim. Se o seu público está no WhatsApp — e está — o método funciona. Shopee, Mercado Livre, lojas, negócios locais, prestadores, afiliados e infoprodutores já aplicam.",
+    },
+    {
+      q: "Preciso ter conhecimento técnico?",
+      a: "Não. O passo a passo é didático, mostramos cada clique. Você não precisa saber programar.",
+    },
+    {
+      q: "Quanto tempo leva para ver resultado?",
+      a: "Com poucos dias de aplicação já é possível lotar seus primeiros grupos. Mas você ganha o método inteiro para aplicar no seu ritmo.",
+    },
+    {
+      q: "E se eu não gostar?",
+      a: "Você tem 7 dias de garantia incondicional. Se não servir para você, devolvemos 100% do valor.",
+    },
+    {
+      q: "Por que comprar agora?",
+      a: "Porque a oferta atual é por tempo limitado e inclui bônus que valem mais que o próprio curso. Cada dia parado é dinheiro deixado na mesa.",
+    },
+  ];
+  return (
+    <Section
+      eyebrow="Quebra de objeções"
+      title={<>Ainda em dúvida? <span className="text-primary-dark">Vamos resolver agora</span></>}
+      tint="muted"
+    >
+      <div className="max-w-3xl mx-auto space-y-4">
+        {items.map((i) => (
+          <div key={i.q} className="p-6 rounded-2xl bg-background border border-border">
+            <h3 className="font-bold text-lg mb-2">{i.q}</h3>
+            <p className="text-muted-foreground leading-relaxed">{i.a}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Faq() {
+  const faqs = [
+    { q: "O acesso é vitalício?", a: "Você tem acesso completo ao método e às atualizações futuras." },
+    { q: "Como recebo o acesso?", a: "Imediatamente após a confirmação do pagamento, por e-mail." },
+    { q: "Posso assistir pelo celular?", a: "Sim. A plataforma funciona em qualquer dispositivo." },
+    { q: "Preciso pagar mensalidade?", a: "Não. O pagamento é único, sem mensalidades." },
+    { q: "A API Oficial é paga à parte?", a: "O uso da API segue a política do WhatsApp, com templates de utilidade extremamente baratos — explicamos tudo dentro do método." },
+    { q: "Tem suporte?", a: "Sim, você tem suporte e acesso à comunidade para tirar dúvidas." },
+  ];
+  return (
+    <Section eyebrow="FAQ" title="Perguntas frequentes">
+      <div className="max-w-3xl mx-auto space-y-3">
+        {faqs.map((f) => (
+          <details
+            key={f.q}
+            className="group p-5 rounded-2xl bg-secondary/40 border border-border open:border-primary/40 transition"
+          >
+            <summary className="cursor-pointer list-none flex items-center justify-between font-bold text-[15px]">
+              {f.q}
+              <span className="ml-4 text-primary-dark transition-transform group-open:rotate-45 text-xl">+</span>
+            </summary>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function FinalCta() {
+  return (
+    <Section tint="dark">
+      <div className="max-w-3xl mx-auto text-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-[11px] font-bold uppercase tracking-wider mb-6">
+          Última chamada
+        </div>
+        <h2 className="text-3xl sm:text-5xl font-extrabold leading-[1.1] mb-5 text-balance">
+          Você pode continuar perdendo grupos…<br />
+          ou começar a <span className="text-primary">lotar todos os dias</span>.
+        </h2>
+        <p className="text-white/70 text-lg leading-relaxed max-w-xl mx-auto mb-8">
+          A decisão de hoje define o tamanho da sua operação amanhã. Entre agora para o Grupo
+          Explosivo e construa uma máquina previsível de leads no WhatsApp.
+        </p>
+        <CTA label="QUERO ENTRAR PARA O GRUPO EXPLOSIVO" sub="Garantia de 7 dias • Acesso imediato" />
+      </div>
+    </Section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="px-5 py-10 border-t border-border bg-background">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <img src={LOGO} alt="Grupo Explosivo" className="h-6 w-auto" />
+          <span className="font-semibold">© {new Date().getFullYear()} Grupo Explosivo</span>
+        </div>
+        <p className="text-center sm:text-right max-w-md">
+          Este produto não é afiliado, endossado ou patrocinado pelo WhatsApp ou Meta Platforms.
+        </p>
+      </div>
+    </footer>
   );
 }
